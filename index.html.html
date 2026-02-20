@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rachel's Singing</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #c8e6f5;
+    --sky-light: #e8f4fc;
+    --sky-deep: #9dcde8;
+    --butter: #fdf3c0;
+    --butter-warm: #f9e87a;
+    --butter-deep: #f0d84a;
+    --cream: #fefcf5;
+    --text: #2c3e50;
+    --text-soft: #6b8a9a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: linear-gradient(160deg, var(--sky-light) 0%, var(--butter) 60%, var(--sky) 100%);
+    overflow: hidden;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  /* floating blobs */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.55;
+    animation: drift 10s ease-in-out infinite alternate;
+  }
+  .blob-1 { width: 420px; height: 420px; background: var(--sky-deep); top: -100px; left: -120px; animation-delay: 0s; }
+  .blob-2 { width: 300px; height: 300px; background: var(--butter-warm); bottom: -60px; right: -80px; animation-delay: 3s; }
+  .blob-3 { width: 220px; height: 220px; background: var(--sky); top: 50%; right: 10%; animation-delay: 6s; }
+
+  @keyframes drift {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, 20px) scale(1.06); }
+  }
+
+  /* musical notes floating */
+  .notes-field { position: absolute; inset: 0; pointer-events: none; }
+  .note {
+    position: absolute;
+    font-size: 1.6rem;
+    opacity: 0;
+    animation: floatNote 6s ease-in infinite;
+    color: var(--sky-deep);
+  }
+  .note:nth-child(2)  { left: 10%; animation-delay: 0.5s; color: var(--butter-deep); }
+  .note:nth-child(3)  { left: 25%; animation-delay: 1.2s; }
+  .note:nth-child(4)  { left: 45%; animation-delay: 2.1s; color: var(--butter-deep); }
+  .note:nth-child(5)  { left: 65%; animation-delay: 0.8s; }
+  .note:nth-child(6)  { left: 80%; animation-delay: 3.0s; color: var(--butter-deep); }
+  .note:nth-child(7)  { left: 90%; animation-delay: 1.7s; }
+  .note:nth-child(8)  { left: 55%; animation-delay: 4.2s; color: var(--butter-deep); }
+  @keyframes floatNote {
+    0%   { transform: translateY(100vh) rotate(-10deg); opacity: 0; }
+    15%  { opacity: 0.7; }
+    85%  { opacity: 0.5; }
+    100% { transform: translateY(-10vh) rotate(15deg); opacity: 0; }
+  }
+
+  .hero-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 1.4rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.3s;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.5s;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--text-soft);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--text-soft);
+    max-width: 380px;
+    margin: 1.5rem auto 2.5rem;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.7s;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.85rem 2.4rem;
+    background: var(--butter-deep);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 100px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(240,216,74,0.4);
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.9s;
+  }
+  .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(240,216,74,0.5);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* wave divider */
+  .wave {
+    width: 100%;
+    display: block;
+    margin-top: -2px;
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    background: var(--cream);
+    padding: 6rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--sky-deep);
+    margin-bottom: 1rem;
+  }
+  .about h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 300;
+    line-height: 1.2;
+    max-width: 600px;
+  }
+  .about p {
+    color: var(--text-soft);
+    font-weight: 300;
+    line-height: 1.9;
+    max-width: 480px;
+    margin-top: 1.5rem;
+    font-size: 1rem;
+  }
+
+  /* ── SERVICES ── */
+  .services {
+    background: linear-gradient(180deg, var(--sky-light) 0%, var(--butter) 100%);
+    padding: 6rem 2rem;
+  }
+  .services-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .services h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    margin-bottom: 3rem;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.4rem;
+  }
+  .card {
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 2.2rem 1.8rem;
+    border: 1px solid rgba(200,230,245,0.5);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(157,205,232,0.3);
+  }
+  .card-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+  .card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.88rem; color: var(--text-soft); font-weight: 300; line-height: 1.7; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials {
+    background: var(--cream);
+    padding: 6rem 2rem;
+    text-align: center;
+  }
+  .testimonials h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    margin-bottom: 3rem;
+  }
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .testi {
+    background: linear-gradient(135deg, var(--sky-light), var(--butter));
+    border-radius: 18px;
+    padding: 2rem;
+    text-align: left;
+    border: 1px solid rgba(200,230,245,0.4);
+  }
+  .testi-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    line-height: 1.8;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+  .testi-name { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-soft); }
+
+  /* ── CONTACT ── */
+  .contact {
+    background: var(--sky-deep);
+    padding: 6rem 2rem;
+    text-align: center;
+  }
+  .contact h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 300;
+    color: white;
+    margin-bottom: 0.8rem;
+  }
+  .contact p { color: rgba(255,255,255,0.8); font-weight: 300; margin-bottom: 2.2rem; }
+  .contact a.btn {
+    background: var(--butter-deep);
+    opacity: 1;
+    animation: none;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--text);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 1.8rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="notes-field">
+    <span class="note">♪</span>
+    <span class="note">♫</span>
+    <span class="note">♩</span>
+    <span class="note">♬</span>
+    <span class="note">♪</span>
+    <span class="note">♫</span>
+    <span class="note">♩</span>
+    <span class="note">♬</span>
+  </div>
+
+  <p class="hero-tag">Voice · Lessons · Performance</p>
+  <h1>Rachel's<br><em>Singing</em></h1>
+  <p class="hero-sub">Where every voice finds its wings. Joyful, personalised singing lessons for all ages and levels.</p>
+  <a href="#contact" class="btn">Book a Lesson</a>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg">
+  <path fill="#fefcf5" d="M0,40 C360,80 1080,0 1440,40 L1440,60 L0,60 Z"/>
+</svg>
+
+<!-- ABOUT -->
+<section class="about">
+  <p class="section-label">About Rachel</p>
+  <h2>A passion for voice, a gift for teaching</h2>
+  <p>Rachel is a classically trained vocalist with a warm, nurturing approach to teaching. Whether you're stepping into your first lesson or preparing for a performance, she meets you exactly where you are — and helps you soar.</p>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="services-inner">
+    <p class="section-label">What's on offer</p>
+    <h2>Lessons tailored to you</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🎵</div>
+        <h3>One-to-One Lessons</h3>
+        <p>Personalised sessions focused on your unique voice, goals, and musical taste.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎤</div>
+        <h3>Performance Coaching</h3>
+        <p>Prepare for auditions, concerts, or weddings with confidence and stage presence.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🧒</div>
+        <h3>Children's Lessons</h3>
+        <p>Fun, playful sessions that build vocal foundations and a lifelong love of singing.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <h3>Online Sessions</h3>
+        <p>Learn from the comfort of home — wherever you are in the world.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <p class="section-label">Kind words</p>
+  <h2>What students say</h2>
+  <div class="testi-grid">
+    <div class="testi">
+      <p class="testi-quote">"Rachel helped me find a confidence I never knew I had. My voice has completely transformed in just three months."</p>
+      <p class="testi-name">— Mia, adult learner</p>
+    </div>
+    <div class="testi">
+      <p class="testi-quote">"My daughter lights up every single lesson. Rachel has a magical way with kids."</p>
+      <p class="testi-name">— James, parent</p>
+    </div>
+    <div class="testi">
+      <p class="testi-quote">"I passed my Grade 8 with distinction. I couldn't have done it without Rachel's guidance."</p>
+      <p class="testi-name">— Sophie, student</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <h2>Ready to find your voice?</h2>
+  <p>Get in touch to book a free introductory session.</p>
+  <a href="mailto:hello@rachelssinging.com" class="btn">Say Hello ✉</a>
+</section>
+
+<footer>© 2026 Rachel's Singing · All rights reserved</footer>
+
+</body>
+</html>
