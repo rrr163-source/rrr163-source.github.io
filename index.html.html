@@ -3,391 +3,799 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rachel's Singing</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<title>Rachel — Singer & Performer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --sky: #c8e6f5;
-    --sky-light: #e8f4fc;
-    --sky-deep: #9dcde8;
-    --butter: #fdf3c0;
-    --butter-warm: #f9e87a;
-    --butter-deep: #f0d84a;
-    --cream: #fefcf5;
-    --text: #2c3e50;
-    --text-soft: #6b8a9a;
-  }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --blue-pale: #d6edf8;
+  --blue-mid:  #a8d8f0;
+  --blue-deep: #6bb5d8;
+  --blue-dark: #3a8ab5;
+  --yellow-pale: #fef8d0;
+  --yellow-mid:  #fce96a;
+  --yellow-warm: #f5d800;
+  --cream: #fdfaf0;
+  --dark:  #1a2630;
+  --mid:   #4a6070;
+  --soft:  #8aa5b5;
+}
 
-  html { scroll-behavior: smooth; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--dark);
+  color: white;
+  overflow-x: hidden;
+  cursor: none;
+}
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--text);
-    overflow-x: hidden;
-  }
+.cursor {
+  width: 12px; height: 12px;
+  background: var(--yellow-mid);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1.5px solid rgba(252,233,106,0.5);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.25s ease;
+}
 
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background: linear-gradient(160deg, var(--sky-light) 0%, var(--butter) 60%, var(--sky) 100%);
-    overflow: hidden;
-    text-align: center;
-    padding: 2rem;
-  }
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.4rem 3rem;
+  background: linear-gradient(180deg, rgba(26,38,48,0.95) 0%, transparent 100%);
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+  color: white;
+  text-decoration: none;
+}
+.nav-logo span { color: var(--yellow-mid); font-style: italic; }
+.nav-links { display: flex; gap: 2.2rem; list-style: none; }
+.nav-links a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--yellow-mid); }
 
-  /* floating blobs */
-  .blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(60px);
-    opacity: 0.55;
-    animation: drift 10s ease-in-out infinite alternate;
-  }
-  .blob-1 { width: 420px; height: 420px; background: var(--sky-deep); top: -100px; left: -120px; animation-delay: 0s; }
-  .blob-2 { width: 300px; height: 300px; background: var(--butter-warm); bottom: -60px; right: -80px; animation-delay: 3s; }
-  .blob-3 { width: 220px; height: 220px; background: var(--sky); top: 50%; right: 10%; animation-delay: 6s; }
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 0 5%;
+  gap: 2rem;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 80% 40%, rgba(107,181,216,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 20% 70%, rgba(252,233,106,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 60% at 60% 90%, rgba(168,216,240,0.10) 0%, transparent 50%);
+  animation: meshShift 12s ease-in-out infinite alternate;
+}
+@keyframes meshShift {
+  0%   { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(15deg); }
+}
+.wave-lines {
+  position: absolute;
+  bottom: 8%; left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  align-items: center;
+  height: 60px;
+  opacity: 0.2;
+}
+.wave-bar {
+  width: 3px;
+  background: linear-gradient(180deg, var(--blue-mid), var(--yellow-mid));
+  border-radius: 3px;
+  animation: wavePulse 1.2s ease-in-out infinite alternate;
+}
+.wave-bar:nth-child(odd)  { animation-delay: 0.1s; }
+.wave-bar:nth-child(3n)   { animation-delay: 0.25s; }
+.wave-bar:nth-child(1)  { height: 20px; }
+.wave-bar:nth-child(2)  { height: 38px; }
+.wave-bar:nth-child(3)  { height: 55px; }
+.wave-bar:nth-child(4)  { height: 42px; }
+.wave-bar:nth-child(5)  { height: 60px; }
+.wave-bar:nth-child(6)  { height: 35px; }
+.wave-bar:nth-child(7)  { height: 48px; }
+.wave-bar:nth-child(8)  { height: 30px; }
+.wave-bar:nth-child(9)  { height: 52px; }
+.wave-bar:nth-child(10) { height: 40px; }
+.wave-bar:nth-child(11) { height: 22px; }
+.wave-bar:nth-child(12) { height: 45px; }
+.wave-bar:nth-child(13) { height: 33px; }
+.wave-bar:nth-child(14) { height: 58px; }
+.wave-bar:nth-child(15) { height: 27px; }
+.wave-bar:nth-child(16) { height: 44px; }
+.wave-bar:nth-child(17) { height: 50px; }
+.wave-bar:nth-child(18) { height: 36px; }
+.wave-bar:nth-child(19) { height: 60px; }
+.wave-bar:nth-child(20) { height: 25px; }
+@keyframes wavePulse {
+  from { transform: scaleY(0.3); }
+  to   { transform: scaleY(1); }
+}
 
-  @keyframes drift {
-    0%   { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(30px, 20px) scale(1.06); }
-  }
+.hero-text { position: relative; z-index: 2; }
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--yellow-mid);
+  margin-bottom: 1.6rem;
+  opacity: 0;
+  animation: slideIn 0.8s ease forwards 0.3s;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 28px; height: 1px;
+  background: var(--yellow-mid);
+}
 
-  /* musical notes floating */
-  .notes-field { position: absolute; inset: 0; pointer-events: none; }
-  .note {
-    position: absolute;
-    font-size: 1.6rem;
-    opacity: 0;
-    animation: floatNote 6s ease-in infinite;
-    color: var(--sky-deep);
-  }
-  .note:nth-child(2)  { left: 10%; animation-delay: 0.5s; color: var(--butter-deep); }
-  .note:nth-child(3)  { left: 25%; animation-delay: 1.2s; }
-  .note:nth-child(4)  { left: 45%; animation-delay: 2.1s; color: var(--butter-deep); }
-  .note:nth-child(5)  { left: 65%; animation-delay: 0.8s; }
-  .note:nth-child(6)  { left: 80%; animation-delay: 3.0s; color: var(--butter-deep); }
-  .note:nth-child(7)  { left: 90%; animation-delay: 1.7s; }
-  .note:nth-child(8)  { left: 55%; animation-delay: 4.2s; color: var(--butter-deep); }
-  @keyframes floatNote {
-    0%   { transform: translateY(100vh) rotate(-10deg); opacity: 0; }
-    15%  { opacity: 0.7; }
-    85%  { opacity: 0.5; }
-    100% { transform: translateY(-10vh) rotate(15deg); opacity: 0; }
-  }
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.5rem, 6.5vw, 6.5rem);
+  line-height: 1.0;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  opacity: 0;
+  animation: slideIn 0.9s ease forwards 0.5s;
+}
+h1 .name-outline {
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255,255,255,0.7);
+  font-style: italic;
+  font-weight: 400;
+}
+h1 .name-filled {
+  display: block;
+  background: linear-gradient(135deg, var(--blue-pale) 0%, var(--yellow-mid) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
-  .hero-tag {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.78rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-soft);
-    margin-bottom: 1.4rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.3s;
-  }
+.hero-desc {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.6);
+  font-weight: 300;
+  max-width: 380px;
+  margin: 1.8rem 0 2.4rem;
+  opacity: 0;
+  animation: slideIn 0.9s ease forwards 0.7s;
+}
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: slideIn 0.9s ease forwards 0.9s;
+}
 
-  h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(4rem, 10vw, 8rem);
-    font-weight: 300;
-    line-height: 1;
-    letter-spacing: -0.02em;
-    color: var(--text);
-    opacity: 0;
-    animation: fadeUp 0.9s ease forwards 0.5s;
-  }
-  h1 em {
-    font-style: italic;
-    color: var(--text-soft);
-  }
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.85rem 2rem;
+  background: var(--yellow-mid);
+  color: var(--dark);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 100px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 30px rgba(252,233,106,0.35);
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 40px rgba(252,233,106,0.55); }
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.85rem 2rem;
+  background: transparent;
+  color: white;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.25);
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-secondary:hover { border-color: var(--blue-mid); color: var(--blue-mid); }
 
-  .hero-sub {
-    font-size: 1.05rem;
-    font-weight: 300;
-    color: var(--text-soft);
-    max-width: 380px;
-    margin: 1.5rem auto 2.5rem;
-    line-height: 1.7;
-    opacity: 0;
-    animation: fadeUp 0.9s ease forwards 0.7s;
-  }
+.hero-visual {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.vinyl {
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%,
+    #1a2630 0%, #1a2630 18%,
+    var(--blue-mid) 19%, var(--blue-mid) 20%,
+    #1e2e3a 21%, #1e2e3a 38%,
+    var(--yellow-mid) 39%, var(--yellow-mid) 40%,
+    #1e2e3a 41%, #1e2e3a 58%,
+    var(--blue-pale) 59%, var(--blue-pale) 60%,
+    #1a2630 61%
+  );
+  box-shadow: 0 0 0 2px rgba(107,181,216,0.2), 0 30px 80px rgba(0,0,0,0.6);
+  position: relative;
+  animation: spinSlow 18s linear infinite;
+}
+.vinyl-label {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px; height: 80px;
+  background: var(--dark);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: var(--yellow-mid);
+  font-size: 1.5rem;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+  animation: spinReverse 18s linear infinite;
+}
+.vinyl-glow {
+  position: absolute;
+  width: 360px; height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(107,181,216,0.2) 0%, transparent 70%);
+  animation: glowPulse 4s ease-in-out infinite alternate;
+}
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes spinReverse {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+@keyframes glowPulse {
+  from { transform: scale(0.9); opacity: 0.5; }
+  to   { transform: scale(1.1); opacity: 1; }
+}
 
-  .btn {
-    display: inline-block;
-    padding: 0.85rem 2.4rem;
-    background: var(--butter-deep);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 100px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 20px rgba(240,216,74,0.4);
-    opacity: 0;
-    animation: fadeUp 0.9s ease forwards 0.9s;
-  }
-  .btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(240,216,74,0.5);
-  }
+.badge {
+  position: absolute;
+  background: linear-gradient(135deg, var(--yellow-pale), var(--yellow-mid));
+  color: var(--dark);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(252,233,106,0.4);
+  animation: floatBadge 3s ease-in-out infinite alternate;
+}
+.badge-1 { top: 12%; right: -5%; animation-delay: 0s; }
+.badge-2 { bottom: 18%; left: -10%; animation-delay: 1.5s; }
+@keyframes floatBadge {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-8px); }
+}
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
 
-  /* wave divider */
-  .wave {
-    width: 100%;
-    display: block;
-    margin-top: -2px;
-  }
+.scroll-hint {
+  position: absolute;
+  bottom: 2.5rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(255,255,255,0.3);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  z-index: 5;
+}
+.scroll-line {
+  width: 1px; height: 36px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.3), transparent);
+  animation: scrollDrop 2s ease infinite;
+}
+@keyframes scrollDrop {
+  0%   { transform: scaleY(0); transform-origin: top; }
+  50%  { transform: scaleY(1); transform-origin: top; }
+  51%  { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
 
-  /* ── ABOUT ── */
-  .about {
-    background: var(--cream);
-    padding: 6rem 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .section-label {
-    font-size: 0.72rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--sky-deep);
-    margin-bottom: 1rem;
-  }
-  .about h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.2rem, 5vw, 3.6rem);
-    font-weight: 300;
-    line-height: 1.2;
-    max-width: 600px;
-  }
-  .about p {
-    color: var(--text-soft);
-    font-weight: 300;
-    line-height: 1.9;
-    max-width: 480px;
-    margin-top: 1.5rem;
-    font-size: 1rem;
-  }
+/* MARQUEE */
+.marquee-strip {
+  background: var(--yellow-mid);
+  padding: 0.85rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-inner {
+  display: inline-flex;
+  animation: marquee 22s linear infinite;
+}
+.marquee-item {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dark);
+  padding: 0 2.5rem;
+}
+.marquee-sep { color: var(--dark); opacity: 0.35; padding: 0 0.5rem; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
 
-  /* ── SERVICES ── */
-  .services {
-    background: linear-gradient(180deg, var(--sky-light) 0%, var(--butter) 100%);
-    padding: 6rem 2rem;
-  }
-  .services-inner {
-    max-width: 900px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  .services h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 300;
-    margin-bottom: 3rem;
-  }
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.4rem;
-  }
-  .card {
-    background: rgba(255,255,255,0.7);
-    backdrop-filter: blur(12px);
-    border-radius: 20px;
-    padding: 2.2rem 1.8rem;
-    border: 1px solid rgba(200,230,245,0.5);
-    transition: transform 0.25s, box-shadow 0.25s;
-  }
-  .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 40px rgba(157,205,232,0.3);
-  }
-  .card-icon { font-size: 2.2rem; margin-bottom: 1rem; }
-  .card h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
-    font-weight: 400;
-    margin-bottom: 0.6rem;
-  }
-  .card p { font-size: 0.88rem; color: var(--text-soft); font-weight: 300; line-height: 1.7; }
+/* SECTION UTILITIES */
+.section-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--yellow-mid);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 24px; height: 1px;
+  background: var(--yellow-mid);
+}
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
 
-  /* ── TESTIMONIALS ── */
-  .testimonials {
-    background: var(--cream);
-    padding: 6rem 2rem;
-    text-align: center;
-  }
-  .testimonials h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 300;
-    margin-bottom: 3rem;
-  }
-  .testi-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5rem;
-    max-width: 860px;
-    margin: 0 auto;
-  }
-  .testi {
-    background: linear-gradient(135deg, var(--sky-light), var(--butter));
-    border-radius: 18px;
-    padding: 2rem;
-    text-align: left;
-    border: 1px solid rgba(200,230,245,0.4);
-  }
-  .testi-quote {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem;
-    font-style: italic;
-    line-height: 1.8;
-    color: var(--text);
-    margin-bottom: 1rem;
-  }
-  .testi-name { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-soft); }
+/* RELEASES */
+.releases {
+  padding: 7rem 5%;
+  background: var(--dark);
+}
+.releases-inner { max-width: 1000px; margin: 0 auto; }
+.releases-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.track-list { display: flex; flex-direction: column; }
+.track {
+  display: grid;
+  grid-template-columns: 40px 52px 1fr auto auto;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.track:hover { background: rgba(255,255,255,0.06); }
+.track-num { font-size: 0.82rem; color: var(--soft); text-align: center; }
+.track:hover .track-num { display: none; }
+.track-play { display: none; justify-content: center; color: var(--yellow-mid); font-size: 0.9rem; }
+.track:hover .track-play { display: flex; }
+.track-art { width: 52px; height: 52px; border-radius: 8px; flex-shrink: 0; }
+.track-title { font-size: 0.95rem; font-weight: 500; color: white; }
+.track-sub { font-size: 0.75rem; color: var(--soft); margin-top: 0.2rem; }
+.tag-new {
+  font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--dark); background: var(--yellow-mid);
+  padding: 0.2rem 0.6rem; border-radius: 100px; font-weight: 500;
+}
+.track-dur { font-size: 0.8rem; color: var(--soft); }
 
-  /* ── CONTACT ── */
-  .contact {
-    background: var(--sky-deep);
-    padding: 6rem 2rem;
-    text-align: center;
-  }
-  .contact h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.2rem, 5vw, 3.8rem);
-    font-weight: 300;
-    color: white;
-    margin-bottom: 0.8rem;
-  }
-  .contact p { color: rgba(255,255,255,0.8); font-weight: 300; margin-bottom: 2.2rem; }
-  .contact a.btn {
-    background: var(--butter-deep);
-    opacity: 1;
-    animation: none;
-  }
+/* SHOWS */
+.shows {
+  padding: 7rem 5%;
+  background: linear-gradient(180deg, #1a2630 0%, #0f1c26 100%);
+}
+.shows-inner { max-width: 860px; margin: 0 auto; }
+.shows-header { margin-bottom: 3rem; }
+.show-list { display: flex; flex-direction: column; }
+.show-item {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.8rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.show-date-box {
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 0.6rem;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  cursor: default;
+}
+.show-item:hover .show-date-box {
+  background: var(--yellow-mid);
+  border-color: var(--yellow-mid);
+  color: var(--dark);
+}
+.show-item:hover .show-month { color: var(--dark); }
+.show-day {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 700; line-height: 1;
+}
+.show-month { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--soft); margin-top: 0.2rem; transition: color 0.2s; }
+.show-venue { font-size: 1rem; font-weight: 500; }
+.show-location { font-size: 0.8rem; color: var(--soft); margin-top: 0.3rem; }
+.show-tag { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.32rem 0.9rem; border-radius: 100px; font-weight: 500; white-space: nowrap; }
+.tag-headline { background: rgba(107,181,216,0.2); color: var(--blue-mid); border: 1px solid rgba(107,181,216,0.3); }
+.tag-support   { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.1); }
+.tag-sold      { background: rgba(252,233,106,0.15); color: var(--yellow-mid); border: 1px solid rgba(252,233,106,0.3); }
 
-  /* ── FOOTER ── */
-  footer {
-    background: var(--text);
-    color: rgba(255,255,255,0.5);
-    text-align: center;
-    padding: 1.8rem;
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
-  }
+/* BOOKING */
+.booking {
+  padding: 8rem 5%;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  background: var(--dark);
+}
+.booking-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 70% at 50% 60%, rgba(107,181,216,0.14) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 50% at 80% 20%, rgba(252,233,106,0.1) 0%, transparent 55%);
+}
+.booking-inner { position: relative; z-index: 2; max-width: 600px; margin: 0 auto; }
+.booking h2 { font-size: clamp(2.5rem, 5vw, 4.2rem); margin: 1.2rem 0; }
+.booking h2 em { font-style: italic; color: transparent; -webkit-text-stroke: 1.5px var(--blue-mid); }
+.booking-desc { color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.8; margin-bottom: 2rem; }
+.booking-perks {
+  display: flex;
+  justify-content: center;
+  gap: 1.8rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+.perk { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: rgba(255,255,255,0.45); }
+.perk-dot { width: 5px; height: 5px; background: var(--yellow-mid); border-radius: 50%; }
+.booking-row {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.booking-input {
+  flex: 1;
+  min-width: 200px; max-width: 300px;
+  padding: 0.85rem 1.4rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 100px;
+  color: white;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.booking-input::placeholder { color: rgba(255,255,255,0.3); }
+.booking-input:focus { border-color: var(--blue-mid); }
+
+/* SOCIAL */
+.social-strip {
+  background: #0f1c26;
+  padding: 1.8rem 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+.social-link {
+  color: rgba(255,255,255,0.35);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.social-link:hover { color: var(--yellow-mid); }
+
+/* FOOTER */
+footer {
+  background: #0a1520;
+  padding: 1.5rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.footer-logo { font-family: 'Playfair Display', serif; font-style: italic; color: rgba(255,255,255,0.35); font-size: 1.1rem; }
+.footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.2); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  nav { padding: 1.2rem 1.5rem; }
+  .nav-links { gap: 1.2rem; }
+  .hero { grid-template-columns: 1fr; padding-top: 7rem; padding-bottom: 5rem; text-align: center; }
+  .hero-desc { margin: 1.5rem auto 2rem; }
+  .hero-buttons { justify-content: center; }
+  .hero-eyebrow { justify-content: center; }
+  .hero-visual { display: none; }
+  .track { grid-template-columns: 32px 44px 1fr auto; }
+  .track-dur { display: none; }
+  .show-item { grid-template-columns: 70px 1fr; }
+  .show-tag { display: none; }
+  footer { justify-content: center; text-align: center; }
+}
 </style>
 </head>
 <body>
 
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Rachel<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#music">Music</a></li>
+    <li><a href="#shows">Shows</a></li>
+    <li><a href="#booking">Booking</a></li>
+  </ul>
+</nav>
+
 <!-- HERO -->
-<section class="hero">
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
-
-  <div class="notes-field">
-    <span class="note">♪</span>
-    <span class="note">♫</span>
-    <span class="note">♩</span>
-    <span class="note">♬</span>
-    <span class="note">♪</span>
-    <span class="note">♫</span>
-    <span class="note">♩</span>
-    <span class="note">♬</span>
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="wave-lines">
+    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+    <div class="wave-bar"></div><div class="wave-bar"></div>
   </div>
 
-  <p class="hero-tag">Voice · Lessons · Performance</p>
-  <h1>Rachel's<br><em>Singing</em></h1>
-  <p class="hero-sub">Where every voice finds its wings. Joyful, personalised singing lessons for all ages and levels.</p>
-  <a href="#contact" class="btn">Book a Lesson</a>
-</section>
-
-<svg class="wave" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg">
-  <path fill="#fefcf5" d="M0,40 C360,80 1080,0 1440,40 L1440,60 L0,60 Z"/>
-</svg>
-
-<!-- ABOUT -->
-<section class="about">
-  <p class="section-label">About Rachel</p>
-  <h2>A passion for voice, a gift for teaching</h2>
-  <p>Rachel is a classically trained vocalist with a warm, nurturing approach to teaching. Whether you're stepping into your first lesson or preparing for a performance, she meets you exactly where you are — and helps you soar.</p>
-</section>
-
-<!-- SERVICES -->
-<section class="services">
-  <div class="services-inner">
-    <p class="section-label">What's on offer</p>
-    <h2>Lessons tailored to you</h2>
-    <div class="cards">
-      <div class="card">
-        <div class="card-icon">🎵</div>
-        <h3>One-to-One Lessons</h3>
-        <p>Personalised sessions focused on your unique voice, goals, and musical taste.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🎤</div>
-        <h3>Performance Coaching</h3>
-        <p>Prepare for auditions, concerts, or weddings with confidence and stage presence.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🧒</div>
-        <h3>Children's Lessons</h3>
-        <p>Fun, playful sessions that build vocal foundations and a lifelong love of singing.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🌐</div>
-        <h3>Online Sessions</h3>
-        <p>Learn from the comfort of home — wherever you are in the world.</p>
-      </div>
+  <div class="hero-text">
+    <p class="hero-eyebrow">Pop · Contemporary · Live Performances</p>
+    <h1>
+      <span class="name-outline">The voice of</span>
+      <span class="name-filled">Rachel</span>
+    </h1>
+    <p class="hero-desc">Singer, songwriter, and live performer — bringing original pop music and electric stage energy wherever the music takes her.</p>
+    <div class="hero-buttons">
+      <a href="#music" class="btn-primary">Listen Now</a>
+      <a href="#booking" class="btn-secondary">Book Me</a>
     </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="vinyl-glow"></div>
+    <div class="vinyl">
+      <div class="vinyl-label">R</div>
+    </div>
+    <div class="badge badge-1">✦ New Single Out Now</div>
+    <div class="badge badge-2">🎤 Available to Book</div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section class="testimonials">
-  <p class="section-label">Kind words</p>
-  <h2>What students say</h2>
-  <div class="testi-grid">
-    <div class="testi">
-      <p class="testi-quote">"Rachel helped me find a confidence I never knew I had. My voice has completely transformed in just three months."</p>
-      <p class="testi-name">— Mia, adult learner</p>
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span class="marquee-item">Original Music</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Live Performances</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Pop Vocalist</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Events &amp; Shows</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Studio Recordings</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Private Bookings</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Original Music</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Live Performances</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Pop Vocalist</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Events &amp; Shows</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Studio Recordings</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Private Bookings</span><span class="marquee-sep">◆</span>
+  </div>
+</div>
+
+<!-- RELEASES -->
+<section class="releases" id="music">
+  <div class="releases-inner">
+    <div class="releases-header">
+      <div>
+        <p class="section-label">Discography</p>
+        <h2>Latest Releases</h2>
+      </div>
+      <a href="#" class="btn-secondary" style="font-size:0.78rem;padding:0.6rem 1.4rem;">View All →</a>
     </div>
-    <div class="testi">
-      <p class="testi-quote">"My daughter lights up every single lesson. Rachel has a magical way with kids."</p>
-      <p class="testi-name">— James, parent</p>
-    </div>
-    <div class="testi">
-      <p class="testi-quote">"I passed my Grade 8 with distinction. I couldn't have done it without Rachel's guidance."</p>
-      <p class="testi-name">— Sophie, student</p>
+
+    <div class="track-list">
+      <div class="track">
+        <div class="track-num">1</div><div class="track-play">▶</div>
+        <div class="track-art" style="background:linear-gradient(135deg,#a8d8f0,#fce96a);"></div>
+        <div><div class="track-title">Golden Hour</div><div class="track-sub">Rachel · 2025 · Pop</div></div>
+        <span class="tag-new">New</span>
+        <div class="track-dur">3:42</div>
+      </div>
+      <div class="track">
+        <div class="track-num">2</div><div class="track-play">▶</div>
+        <div class="track-art" style="background:linear-gradient(135deg,#d6edf8,#6bb5d8);"></div>
+        <div><div class="track-title">Breathe Again</div><div class="track-sub">Rachel · 2024 · Pop / R&B</div></div>
+        <span></span>
+        <div class="track-dur">3:19</div>
+      </div>
+      <div class="track">
+        <div class="track-num">3</div><div class="track-play">▶</div>
+        <div class="track-art" style="background:linear-gradient(135deg,#fef8d0,#f5d800);"></div>
+        <div><div class="track-title">Sunblind</div><div class="track-sub">Rachel · 2024 · Pop</div></div>
+        <span></span>
+        <div class="track-dur">3:56</div>
+      </div>
+      <div class="track">
+        <div class="track-num">4</div><div class="track-play">▶</div>
+        <div class="track-art" style="background:linear-gradient(135deg,#6bb5d8,#a8d8f0);"></div>
+        <div><div class="track-title">Still Standing</div><div class="track-sub">Rachel · 2023 · Pop Ballad</div></div>
+        <span></span>
+        <div class="track-dur">4:11</div>
+      </div>
+      <div class="track">
+        <div class="track-num">5</div><div class="track-play">▶</div>
+        <div class="track-art" style="background:linear-gradient(135deg,#fce96a,#6bb5d8);"></div>
+        <div><div class="track-title">Neon &amp; Blue</div><div class="track-sub">Rachel · 2023 · Pop</div></div>
+        <span></span>
+        <div class="track-dur">3:28</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="contact" id="contact">
-  <h2>Ready to find your voice?</h2>
-  <p>Get in touch to book a free introductory session.</p>
-  <a href="mailto:hello@rachelssinging.com" class="btn">Say Hello ✉</a>
+<!-- SHOWS -->
+<section class="shows" id="shows">
+  <div class="shows-inner">
+    <div class="shows-header">
+      <p class="section-label">Live</p>
+      <h2>Upcoming Shows</h2>
+    </div>
+    <div class="show-list">
+      <div class="show-item">
+        <div class="show-date-box"><div class="show-day">14</div><div class="show-month">Mar</div></div>
+        <div><div class="show-venue">The Blue Room</div><div class="show-location">📍 Nashville, TN</div></div>
+        <span class="show-tag tag-headline">Headline</span>
+      </div>
+      <div class="show-item">
+        <div class="show-date-box"><div class="show-day">22</div><div class="show-month">Mar</div></div>
+        <div><div class="show-venue">Spring Gala 2026</div><div class="show-location">📍 Atlanta, GA · Private Event</div></div>
+        <span class="show-tag tag-sold">Sold Out</span>
+      </div>
+      <div class="show-item">
+        <div class="show-date-box"><div class="show-day">05</div><div class="show-month">Apr</div></div>
+        <div><div class="show-venue">SoundWave Festival</div><div class="show-location">📍 Austin, TX</div></div>
+        <span class="show-tag tag-support">Support Slot</span>
+      </div>
+      <div class="show-item">
+        <div class="show-date-box"><div class="show-day">19</div><div class="show-month">Apr</div></div>
+        <div><div class="show-venue">Velvet Stage</div><div class="show-location">📍 New York, NY</div></div>
+        <span class="show-tag tag-headline">Headline</span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<footer>© 2026 Rachel's Singing · All rights reserved</footer>
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="booking-bg"></div>
+  <div class="booking-inner">
+    <p class="section-label" style="justify-content:center;">Bookings</p>
+    <h2>Make your event<br><em>unforgettable</em></h2>
+    <p class="booking-desc">Available for weddings, corporate events, private parties, and festivals. Drop your email and Rachel will be in touch within 24 hours.</p>
+    <div class="booking-perks">
+      <div class="perk"><div class="perk-dot"></div>Weddings</div>
+      <div class="perk"><div class="perk-dot"></div>Corporate Events</div>
+      <div class="perk"><div class="perk-dot"></div>Festivals</div>
+      <div class="perk"><div class="perk-dot"></div>Private Parties</div>
+    </div>
+    <div class="booking-row">
+      <input type="email" class="booking-input" placeholder="your@email.com">
+      <a href="mailto:hello@rachelsings.com" class="btn-primary">Send Enquiry</a>
+    </div>
+  </div>
+</section>
 
+<!-- SOCIAL -->
+<div class="social-strip">
+  <a href="#" class="social-link">♪ Spotify</a>
+  <a href="#" class="social-link">▷ YouTube</a>
+  <a href="#" class="social-link">◈ Instagram</a>
+  <a href="#" class="social-link">♫ Apple Music</a>
+  <a href="#" class="social-link">⊕ TikTok</a>
+</div>
+
+<footer>
+  <span class="footer-logo">Rachel.</span>
+  <span class="footer-copy">© 2026 Rachel. All rights reserved.</span>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = window.innerWidth/2, my = window.innerHeight/2;
+  let rx = mx, ry = my;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function loop() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(loop);
+  })();
+  document.querySelectorAll('.track').forEach(t => {
+    t.addEventListener('click', () => {
+      t.style.background = 'rgba(252,233,106,0.09)';
+      setTimeout(() => t.style.background = '', 500);
+    });
+  });
+</script>
 </body>
 </html>
