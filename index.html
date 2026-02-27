@@ -796,7 +796,7 @@ footer {
   <span class="footer-copy">© 2026 Rachel. All rights reserved.</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   let mx = window.innerWidth/2, my = window.innerHeight/2;
@@ -809,4 +809,11 @@ footer {
     requestAnimationFrame(loop);
   })();
   document.querySelectorAll('.track').forEach(t => {
-    t.addEventListener('click', () 
+    t.addEventListener('click', () => {
+      t.style.background = 'rgba(252,233,106,0.09)';
+      setTimeout(() => t.style.background = '', 500);
+    });
+  });
+</script>
+</body>
+</html>
